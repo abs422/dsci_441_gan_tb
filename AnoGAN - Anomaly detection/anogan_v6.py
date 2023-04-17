@@ -464,6 +464,8 @@ model_g, model_d = load_model()
 # Define path to image directory in Google Drive
 sick_img_path = '/content/drive/MyDrive/DSCI 441 - Anomaly detection in images/Data/TBX11K/imgs/sick'
 tb_img_path = '/content/drive/MyDrive/DSCI 441 - Anomaly detection in images/Data/TBX11K/imgs/tb'
+healthy_montgo_img_path = '/content/drive/MyDrive/DSCI 441 - Anomaly detection in images/Data/Montgo/Healthy'
+tb_montgo_img_path = '/content/drive/MyDrive/DSCI 441 - Anomaly detection in images/Data/Montgo/Tb'
 
 # Load train image data from directory
 data = []
@@ -471,32 +473,53 @@ for file in os.listdir(sick_img_path):
     img = Image.open(os.path.join(sick_img_path, file)).convert('L')
     img = img.resize((256, 256))
     data.append(np.array(img).reshape(256, 256, 1))
+X_sick = np.array(data)
 
-# Load train image data from directory
+# Load Tuberculosis image from TBX11K data from directory
 tb = []
 for file in os.listdir(tb_img_path):
     img = Image.open(os.path.join(tb_img_path, file)).convert('L')
     img = img.resize((256, 256))
     tb.append(np.array(img).reshape(256, 256, 1))
+X_tb = np.array(tb)
+
+
+# Load healthy image from montgo data from directory
+healthy_montgo = []
+for file in os.listdir(healthy_montgo_img_path):
+    img = Image.open(os.path.join(healthy_montgo_img_path, file)).convert('L')
+    img = img.resize((256, 256))
+    healthy_montgo.append(np.array(img).reshape(256, 256, 1))
+X_healthy_montgo = np.array(healthy_montgo)
+
+# Load Tb image from montgo data from directory
+tb_montgo = []
+for file in os.listdir(tb_montgo_img_path):
+    img = Image.open(os.path.join(tb_montgo_img_path, file)).convert('L')
+    img = img.resize((256, 256))
+    tb_montgo.append(np.array(img).reshape(256, 256, 1))
+X_tb_montgo = np.array(tb_montgo)
+
+X_tb_montgo.shape
 
 import pandas as pd
-ascore_test = []
-for i in range(0, X_test_original.shape[0]):
-  test_img = X_test_original[i]
-  score, qurey, pred, diff = anomaly_detection(test_img)
-  ascore_test = ascore_test + [score]
+# ascore_test = []
+# for i in range(0, X_test_original.shape[0]):
+#   test_img = X_test_original[i]
+#   score, qurey, pred, diff = anomaly_detection(test_img)
+#   ascore_test = ascore_test + [score]
 
 
-# ascore_train = []
-# for i in range(0, X_train.shape[0]):
-#   train_img = X_train[i]
-#   score, qurey, pred, diff = anomaly_detection(train_img)
-#   ascore_train = ascore_train + [score]
-#   ascore_traindf = pd.DataFrame(ascore_train)
-#   ascore_traindf.to_csv('ascore_traindf.csv')
+ascore_train = []
+for i in range(0, X_train.shape[0]):
+  train_img = X_train[i]
+  score, qurey, pred, diff = anomaly_detection(train_img)
+  ascore_train = ascore_train + [score]
+  ascore_traindf = pd.DataFrame(ascore_train)
+  ascore_traindf.to_csv('ascore_traindf.csv')
 
 
-X_sick = np.array(data)
+
 ascore_sick = []
 for i in range(0, X_sick.shape[0]):
   train_img = X_sick[i]
@@ -506,14 +529,31 @@ for i in range(0, X_sick.shape[0]):
   ascore_sickdf.to_csv('ascore_sickdf.csv')
 
 
-X_tb = np.array(tb)
-ascore_sick = []
+
+ascore_tb = []
 for i in range(0, X_tb.shape[0]):
   train_img = X_tb[i]
   score, qurey, pred, diff = anomaly_detection(X_tb)
   ascore_tb = ascore_tb + [score]
   ascore_tbdf = pd.DataFrame(ascore_tb)
   ascore_tbdf.to_csv('ascore_tbdf.csv')
+
+
+ascore_healthy_montgo = []
+for i in range(0, X_healthy_montgo.shape[0]):
+  train_img = X_healthy_montgo[i]
+  score, qurey, pred, diff = anomaly_detection(train_img)
+  ascore_healthy_montgo = ascore_healthy_montgo + [score]
+  ascore_healthy_montgodf = pd.DataFrame(ascore_healthy_montgo)
+  ascore_healthy_montgodf.to_csv('ascore_healthy_montgodf.csv')
+
+ascore_tb_montgo = []
+for i in range(0, X_tb_montgo.shape[0]):
+  train_img = X_tb_montgo[i]
+  score, qurey, pred, diff = anomaly_detection(train_img)
+  ascore_tb_montgo = ascore_tb_montgo + [score]
+  ascore_tb_montgodf = pd.DataFrame(ascore_tb_montgo)
+  ascore_tb_montgodf.to_csv('ascore_tb_montgodf.csv')
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -551,8 +591,8 @@ import seaborn as sns
 
 fig, ax = plt.subplots()
 
-ax = sns.kdeplot(data=healthy[500:]['0'], label='Healthy- TbX110K', ax=ax, shade = True, color= 'red')
-ax = sns.kdeplot(data=testdf[100:]['0'], label='Tb-Monto-Shenzhen' , ax=ax, shade = True, color = 'darkblue')
+ax = sns.kdeplot(data=healthy['0'], label='Healthy- TbX110K', ax=ax, shade = True, color= 'red')
+ax = sns.kdeplot(data=testdf['0'], label='Tb-Monto-Shenzhen' , ax=ax, shade = True, color = 'darkblue')
 # ax = sns.kdeplot(data=tb[100:]['0'], label='Tb-TBX1100K', ax=ax)
 
 # ax.set_xlabel('KDE plot example from seaborn")
