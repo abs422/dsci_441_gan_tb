@@ -1,4 +1,4 @@
-Following is the list of code files and folders in this directory - 
+Following is the list of code files and folders in this directory (dsci_441_gan_tb/AnoGAN - Anomaly detection) - 
 
 1. anogan.py - The original source code file of AnoGAN, used as inspiration in this project to build a working AnoGAN model
 2. main.py - The original source code file supporting AnoGAN implementation, used as inspiration in this project to build a working AnoGAN model
