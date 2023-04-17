@@ -1,6 +1,12 @@
 # DSCI 441 - Disease Identification using Anomaly detection
+In this repository, you may find the implementation of AnoGAN with hyperparameter tuning for unsupervised anomaly detection in Chest X-Ray images. The model is trained on multiple sources available on google drive link provided below. 
 
-### Reference 
+### Motivation and Background
+As data scientists, we still have a longer road ahead in matching physician expertise for detecting different diagnoses using algorithms. Using deep learning and medical images like X-Ray, in this study we attempt to devise a methodology to identify tuberculosis in patients. We always find more data records with absence of
+disease than presence and this statistically pose a major challenge to develop a supervised disease detection model. Therefore, in this study we turn to unsupervised techniques to develop an anomaly detection model using Generative Networks. We believe that with enough samples of Chest X-Ray images for healthy patients, we can train a Generative Adversarial Network (GAN) to detect the disease. The disease instance should lie in the outlier zone of the trained GAN model as it could only regenerates image of healthy patients with minimal reconstruction loss.
+
+
+### Main References for concepts and codes
 1. Paper - https://arxiv.org/abs/1703.05921
 2. AnoGAN(code, keras) : https://github.com/yjucho1/anoGAN
 3. AnoGAN(code, tf) : https://github.com/LeeDoYup/AnoGAN
