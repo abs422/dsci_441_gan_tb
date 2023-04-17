@@ -11,6 +11,11 @@ disease than presence and this statistically pose a major challenge to develop a
 2. AnoGAN(code, keras) : https://github.com/yjucho1/anoGAN
 3. AnoGAN(code, tf) : https://github.com/LeeDoYup/AnoGAN
 
+### Datasets used 
+1. China Set - The Shenzhen set
+2. Montgomery County - Chest X ray
+3. TBX11K Set
+
 ### AnoGAN architecture
 ![anogan2](https://user-images.githubusercontent.com/111200749/232359547-9be3de20-df80-4f7d-b15e-e0987aa43c84.png)
 
