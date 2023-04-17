@@ -7,7 +7,16 @@ Following is the list of code files and folders in this directory (dsci_441_gan_
 5. streamlit_app.py - A working streamlit app, with basic functionality of taking an image as an input and predicting if the image is of a Tuberculosis patient
 
 Current working code of AnoGAN model building and performance evaluation
-1. anogan_v6.py
+1. anogan_v6.py - Please note .ipynb version of this code was > 25 Mb and hence could not be uploaded to GitHub
+
+Instructions to run anogan_v6.py - 
+1. At multiple instances the file, the healthy, sick (Non Tb) or Tb images are imported from google drive. All imported files are properly labeled. While importing training set, healthy images are imported and while making test set, Tb images are imported
+2.  Please make sure to change the directory to the location where the required images are saved.
+3.  You can use this link to access the folder on google drive which was used in the code. 
+https://drive.google.com/drive/folders/1xGupJOw8dcwXeokWcGfcIl9vg1-i-cT1?usp=sharing
+https://drive.google.com/drive/folders/14LpXOHVdlrV_UUJSXgxbFFdu2YRCyGOa?usp=sharing
+4. All the code can be sequentially run, however please avoid running the cells where models are saved as it may overwrite my existing model which is used for prediction
+
 
 
 
