@@ -5,3 +5,8 @@
 2. AnoGAN(code, keras) : https://github.com/yjucho1/anoGAN
 3. AnoGAN(code, tf) : https://github.com/LeeDoYup/AnoGAN
 
+## AnoGAN architecture
+![anogan2](https://user-images.githubusercontent.com/111200749/232359547-9be3de20-df80-4f7d-b15e-e0987aa43c84.png)
+
+## Desired plot for thresholding 
+![sample_threshold](https://user-images.githubusercontent.com/111200749/232359587-14cfa741-374b-4a89-8183-fe38faad3220.png)
