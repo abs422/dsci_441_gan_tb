@@ -10,6 +10,7 @@ Original file is located at
 from __future__ import print_function
 import cv2
 import numpy as np
+import pandas as pd
 import streamlit as st
 import tensorflow as tf
 import io
@@ -32,12 +33,14 @@ from tqdm import tqdm
 import math
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2,preprocess_input as mobilenet_v2_preprocess_input
-
+from scipy import stats
 
 # import tensorflow as tf
 
 
 from keras.utils. generic_utils import Progbar
+shen_tb = pd.read_csv("C:/Lehigh/Study Material/DSCI 441 - Statistical and Machine Learning/Project/tb_shen.csv")
+anoma_scores_tb = shen_tb['0']
 
 z_dim = 10
 img_size = 256
@@ -218,7 +221,7 @@ uploaded_file = st.file_uploader("Choose a chest X-Ray image file (jpg or png)",
 with open("style.css") as f:
     st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
 
-
+tsne = Image.open("C:/Lehigh/Study Material/DSCI 441 - Statistical and Machine Learning/Project/Report/tsne feature 2.png")
 
 if uploaded_file is not None:
   file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
@@ -261,16 +264,16 @@ if uploaded_file is not None:
   
   check = st.checkbox('Show intermediate results')
   
-  col1, col2 = st.columns([5, 1])
+  # col1, col2 = st.columns([5, 1])
 
-  with col2:
-      st.text("")
-      
-  if Genrate_pred:
-    with col1:
-      st.text("Predicting...it may take few minutes")
+  # with col2:
+  #     st.text("")
+  #     
+  # if Genrate_pred:
+  #   with col1:
+  #     st.text("Predicting...it may take few minutes")
   
-    
+  model_summary = st.checkbox("Show model capability, is the model always accurate?")  
 
   if Genrate_pred:
     bytes_data = uploaded_file.getvalue()
@@ -292,6 +295,8 @@ if uploaded_file is not None:
     # Check for threshold and display the results    
     if score > 9500000:
       st.title("Patient may have Tuberculosis")
+      perce = round(stats.percentileofscore(anoma_scores_tb, score), 2)
+      st.write(f'The score of this patient is at {perce}% among all available tuberculosis patients')
     else:
       st.title("Patient is healthy")
     
@@ -302,29 +307,28 @@ if uploaded_file is not None:
         col1, col2, col3 = st.columns([2,2,2])
 
         with col1:
-            st.image(qurey.reshape(256,256), channels="RGB")
+            st.image(qurey.reshape(256,256), channels="RGB", caption = "Original Image")
 
         with col2:
-            st.image(pred.reshape(256,256), channels="RGB")
+            st.image(pred.reshape(256,256), channels="RGB", caption = "Pattern for anomaly detection")
 
         with col3:
-            st.image(cv2.cvtColor(diff,cv2.COLOR_BGR2RGB))
+            st.image(cv2.cvtColor(diff,cv2.COLOR_BGR2RGB), caption = "Pixel wise difference between original and generated pattern")
         #st.image(qurey.reshape(256,256), channels="RGB")
         #st.image(pred.reshape(256,256), channels="RGB")
-        #st.image(cv2.cvtColor(diff,cv2.COLOR_BGR2RGB))
-        col4, col1, col2, col5, col3 = st.columns([0.4,1.6,1.4, .2,1.75])
-        with col4:
-            st.write("")
-        with col1:
-            st.write("Query image")
-
-        with col2:
-            st.write("Reconstructed pattern")
-        with col5:
-            st.write("")
-        with col3:
-            st.write("Difference with healthy patient")
+        #st.image(cv2.cvtColor(diff,cv2.COLOR_BGR2RGB))     
         
+    
+    
+    if model_summary:
+        
+        
+        col1, col2 = st.columns([4,4])
+        
+        with col1:
+            st.image(tsne, channels="RGB", caption = "t-SNE embedding on feature representation")
+        with col2:
+            st.write("The model is trained on healthy patients of the images and can predict Tuberculosis by learning meaningful anatomical features, it can be seen in the figure on the right where feature representation of unhealthy (anomalous) and healthy (normal) images are distinctively spaced. Using the right threshold, as shown in image below we can predict Tuberculosis. However, needless of prediction made by this App, physcian consultation is advised.")
     
 
     # random_image = np.random.uniform(0, 1, (100, 256, 256, 1))
