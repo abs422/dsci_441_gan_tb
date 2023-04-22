@@ -24,7 +24,8 @@ from keras.layers import BatchNormalization
 from keras.optimizers import Adam, RMSprop
 from keras import backend as K
 from keras import initializers
-
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as p
 # import numpy as np
 from tqdm import tqdm
 # import cv2
@@ -40,7 +41,7 @@ from keras.utils. generic_utils import Progbar
 
 z_dim = 10
 img_size = 256
-
+st.title("Tuberculosis Prediction App")
 ### combine images for visualization
 def combine_images(generated_images):
     num = generated_images.shape[0]
@@ -185,6 +186,7 @@ def anomaly_detector(g=None, d=None, z_dim=z_dim):
     
     return model
 
+
 ### anomaly detection
 def compute_anomaly_score(model, x, iterations=500, d=None, z_dim=z_dim):
     z = np.random.uniform(0, 1, size=(1, z_dim))
@@ -200,18 +202,41 @@ def compute_anomaly_score(model, x, iterations=500, d=None, z_dim=z_dim):
     
     return loss, similar_data
 
-model_d = tf.keras.models.load_model("Models/model_d.hdf5")
-model_g = tf.keras.models.load_model("Models/model_g.hdf5")
+@st.cache_data()
+def load_discr():
+	return tf.keras.models.load_model("Models/model_d.hdf5")
+@st.cache_data()
+def load_gen():
+	return tf.keras.models.load_model("Models/model_g.hdf5")
+
+
+model_d = load_discr()
+model_g = load_gen()
+
 ### load file
-uploaded_file = st.file_uploader("Choose a image file", type=["jpg", "png"])
+uploaded_file = st.file_uploader("Choose a chest X-Ray image file (jpg or png)", type=["jpg", "png"])
+with open("style.css") as f:
+    st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
+
+
 
 if uploaded_file is not None:
   file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
   opencv_image = cv2.imdecode(file_bytes, 1)
   opencv_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2RGB)
   resized = cv2.resize(opencv_image,(256,256))
+  
+  col1, col2, col3 = st.columns([2,4,2])
 
-  st.image(opencv_image, channels="RGB")
+  with col1:
+  	st.write("")
+
+  with col2:
+    	st.image(opencv_image, channels="RGB")
+
+  with col3:
+    	st.write("")
+  
 
   resized = mobilenet_v2_preprocess_input(resized)
   ### 2. test generator
@@ -221,7 +246,31 @@ if uploaded_file is not None:
   img = img.astype(np.uint8)
   img = cv2.resize(img, None, fx=4, fy=4, interpolation=cv2.INTER_NEAREST)
 
-  Genrate_pred = st.button("Generate Prediction")
+  col1, col2, col3 , col4, col5 = st.columns([0.75,1.1,3,.1,1])
+
+  with col1:
+  	pass
+  with col2:
+  	pass
+  with col4:
+  	pass
+  with col5:
+  	pass
+  with col3 :
+    Genrate_pred = st.button("Can patient have Tuberculosis?")
+  
+  check = st.checkbox('Show intermediate results')
+  
+  col1, col2 = st.columns([5, 1])
+
+  with col2:
+      st.text("")
+      
+  if Genrate_pred:
+    with col1:
+      st.text("Predicting...it may take few minutes")
+  
+    
 
   if Genrate_pred:
     bytes_data = uploaded_file.getvalue()
@@ -233,11 +282,80 @@ if uploaded_file is not None:
     start = cv2.getTickCount()
     score, qurey, pred, diff = anomaly_detection(test_img)
     time = (cv2.getTickCount() - start) / cv2.getTickFrequency() * 1000
-    if score > 1000000:
-      st.title("Predicted Label for the image is Unhealthy")
-    st.image(qurey.reshape(256,256), channels="RGB")
-    st.image(pred.reshape(256,256), channels="RGB")
-    st.image(cv2.cvtColor(diff,cv2.COLOR_BGR2RGB))
+    col1, col2 = st.columns([5, 1])
+
+    with col1:
+        st.write("Done! See prediction below")
+        
+    with col2:
+        st.write("")
+    # Check for threshold and display the results    
+    if score > 9500000:
+      st.title("Patient may have Tuberculosis")
+    else:
+      st.title("Patient is healthy")
+    
+    # Show intermediate results
+    
+    
+    if check:
+        col1, col2, col3 = st.columns([2,2,2])
+
+        with col1:
+            st.image(qurey.reshape(256,256), channels="RGB")
+
+        with col2:
+            st.image(pred.reshape(256,256), channels="RGB")
+
+        with col3:
+            st.image(cv2.cvtColor(diff,cv2.COLOR_BGR2RGB))
+        #st.image(qurey.reshape(256,256), channels="RGB")
+        #st.image(pred.reshape(256,256), channels="RGB")
+        #st.image(cv2.cvtColor(diff,cv2.COLOR_BGR2RGB))
+        col4, col1, col2, col5, col3 = st.columns([0.4,1.6,1.4, .2,1.75])
+        with col4:
+            st.write("")
+        with col1:
+            st.write("Query image")
+
+        with col2:
+            st.write("Reconstructed pattern")
+        with col5:
+            st.write("")
+        with col3:
+            st.write("Difference with healthy patient")
+        
+    
+
+    # random_image = np.random.uniform(0, 1, (100, 256, 256, 1))
+    # print("random noise image")
+    # plt.figure(4, figsize=(2, 2))
+    # plt.title('random noise image')
+    # plt.imshow(random_image[0].reshape(256,256), cmap=plt.cm.gray)
+    # 
+    # # Display the plot in Streamlit
+    # st.pyplot(plt)
+    # 
+    # # intermidieate output of discriminator
+    # model = feature_extractor()
+    # feature_map_of_random = model.predict(random_image, verbose=1)
+    # feature_map_of_minist = model.predict(X_test_original[:300], verbose=1)
+    # feature_map_of_minist_1 = model.predict(X_test[:100], verbose=1)
+    # 
+    # # t-SNE for visulization
+    # output = np.concatenate((feature_map_of_random, feature_map_of_minist, feature_map_of_minist_1))
+    # output = output.reshape(output.shape[0], -1)
+    # anomaly_flag = np.array([1]*100+ [0]*300)
+    # 
+    # X_embedded = TSNE(n_components=2).fit_transform(output)
+    # plt.figure(5)
+    # plt.title("t-SNE embedding on the feature representation")
+    # plt.scatter(X_embedded[:100,0], X_embedded[:100,1], label='random noise(anomaly)')
+    # plt.scatter(X_embedded[100:400,0], X_embedded[100:400,1], label='mnist(anomaly)')
+    # plt.scatter(X_embedded[400:,0], X_embedded[400:,1], label='mnist(normal)')
+    # plt.legend()
+    # st.pyplot(plt)
+    
 
 ### 2. test generator
 # generated_img = generate(25)
