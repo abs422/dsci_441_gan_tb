@@ -221,7 +221,11 @@ uploaded_file = st.file_uploader("Choose a chest X-Ray image file (jpg or png)",
 with open("style.css") as f:
     st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
 
-tsne = Image.open("C:/Lehigh/Study Material/DSCI 441 - Statistical and Machine Learning/Project/Report/tsne feature 2.png")
+tsne = Image.open("C:/Lehigh/Study Material/DSCI 441 - Statistical and Machine Learning/Project/Report/tsne feature.png")
+
+link1 = 'https://openi.nlm.nih.gov/faq#faq-tb-coll'
+link2 = 'https://www.kaggle.com/datasets/usmanshams/tbx-11/versions/1?resource=download'
+link3 = 'https://github.com/abs422/dsci_441_gan_tb'
 
 if uploaded_file is not None:
   file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
@@ -229,17 +233,31 @@ if uploaded_file is not None:
   opencv_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2RGB)
   resized = cv2.resize(opencv_image,(256,256))
   
-  col1, col2, col3 = st.columns([2,4,2])
+  col1, col2, col3, col4 = st.columns([4,0.2,3, 0.1])
 
   with col1:
-  	st.write("")
-
+        st.image(opencv_image, channels="RGB")
+        
   with col2:
-    	st.image(opencv_image, channels="RGB")
+    	pass
 
   with col3:
-    	st.write("")
-  
+    	
+        Genrate_pred = st.button("Click here to check if patient has Tuberculosis!")
+        check = st.checkbox('Show intermediate results')
+        model_summary = st.checkbox("Show model capability, is the model always accurate?")  
+        # st.write("    ")
+        st.write("    ")
+        st.subheader("Related Links")
+        st.markdown(f"Click [here]({link1}) for Shenzhen X-Ray images.")
+        st.markdown(f"Click [here]({link2}) for TbX11K X-Ray images.")
+        st.markdown(f"My [Github]({link3})")
+        # st.write("""<div style="width:100%;text-align:center;"><a href="https://streamlit.io" style="float:center"><img src="https://openi.nlm.nih.gov/faq#faq-tb-coll" width="22px"></img></a></div>""", unsafe_allow_html=True)
+        # st.write("""<div style="width:100%;text-align:center;"><a href="https://streamlit.io" style="float:center"><img src="https://www.kaggle.com/datasets/usmanshams/tbx-11/versions/1?resource=download" width="22px"></img></a></div>""", unsafe_allow_html=True)
+  with col4:
+        pass
+        #if Genrate_pred:
+        #    st.text("Calculating score, result will appear below...")
 
   resized = mobilenet_v2_preprocess_input(resized)
   ### 2. test generator
@@ -249,20 +267,20 @@ if uploaded_file is not None:
   img = img.astype(np.uint8)
   img = cv2.resize(img, None, fx=4, fy=4, interpolation=cv2.INTER_NEAREST)
 
-  col1, col2, col3 , col4, col5 = st.columns([0.75,1.1,3,.1,1])
-
-  with col1:
-  	pass
-  with col2:
-  	pass
-  with col4:
-  	pass
-  with col5:
-  	pass
-  with col3 :
-    Genrate_pred = st.button("Can patient have Tuberculosis?")
+  # col1, col2, col3 , col4, col5 = st.columns([0.75,1.1,3,.1,1])
+  # 
+  # with col1:
+  # 	pass
+  # with col2:
+  # 	pass
+  # with col4:
+  # 	pass
+  # with col5:
+  # 	pass
+  # with col3 :
+  #  Genrate_pred = st.button("Can patient have Tuberculosis?")
   
-  check = st.checkbox('Show intermediate results')
+  # check = st.checkbox('Show intermediate results')
   
   # col1, col2 = st.columns([5, 1])
 
@@ -273,7 +291,7 @@ if uploaded_file is not None:
   #   with col1:
   #     st.text("Predicting...it may take few minutes")
   
-  model_summary = st.checkbox("Show model capability, is the model always accurate?")  
+  # model_summary = st.checkbox("Show model capability, is the model always accurate?")  
 
   if Genrate_pred:
     bytes_data = uploaded_file.getvalue()
