@@ -8,7 +8,7 @@ Original file is located at
 """
 
 from __future__ import print_function
-import cv2
+# import cv2
 import numpy as np
 import pandas as pd
 import streamlit as st
