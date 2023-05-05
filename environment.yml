@@ -1,0 +1,19 @@
+name: streamlit-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pandas
+  - numpy
+  - streamlit
+  - tensorflow
+  - io
+  - PIL
+  - base64
+  - keras
+  - sklearn
+  - matplotlib
+  - tqdm
+  - math
+  - scipy
+  - opencv
