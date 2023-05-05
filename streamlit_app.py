@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/16FhWmQ4oqcf_PxerH5QJH__qvCbH4HzV
 """
 
-# from __future__ import print_function
+from __future__ import print_function
 import cv2
 import numpy as np
 import pandas as pd
