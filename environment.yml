@@ -16,4 +16,4 @@ dependencies:
   - tqdm
   - math
   - scipy
-  - cv2
+  - opencv
