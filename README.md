@@ -26,7 +26,18 @@ disease than presence and this statistically pose a major challenge to develop a
 https://drive.google.com/drive/folders/1xGupJOw8dcwXeokWcGfcIl9vg1-i-cT1?usp=sharing 
 https://drive.google.com/drive/folders/14LpXOHVdlrV_UUJSXgxbFFdu2YRCyGOa?usp=sharing
 
-### Details about the code files 
+### Details about the files (dsci_441_gan_tb/)
+Following are the description of files and folders in directory - dsci_441_gan_tb/
+
+1. Model_d.hdf5 - Final saved discriminator model of trained GAN, was used in the streamlit app to make predictions
+2. Model_g.hdf5 - Final saved generator model of trained GAN, was used in the streamlit app to make predictions
+3. anogan_tb_detection.py - Final AnoGAN python code file, please see instructions below to run and regenerate the results
+4. requirement.txt - This file contains list the modules required to run anogan_tb_detection.py and streamlit_app.py
+5. streamlit_app.py - Final python code file to reproduce the streamlit app on streamlit community cloud
+6. tb_shez.csv - Contain anomaly scores for tuberculosis patients, this file was used in the streamlit app to summarize the level of sickness among tuberculosis patients
+7. tsne feature.png - A summary image highlighting the t-sne embedding of features representation from last layer of discriminator in GAN model, this is displayed in streamlit app to summarize GAN capability
+
+### Details about the code files (dsci_441_gan_tb/AnoGAN - Anomaly detection)
 Following is the list of code files and folders in this directory (dsci_441_gan_tb/AnoGAN - Anomaly detection) -
 
 1. anogan.py - The original source code file of AnoGAN, used as inspiration in this project to build a working AnoGAN model
@@ -34,11 +45,9 @@ Following is the list of code files and folders in this directory (dsci_441_gan_
 3. AnoGAN_v3.ipynb - The first working model of AnoGAN, predicting anomaly score for a givn test image
 4. AnoGAN_v4.ipynb - More optimized working model of AnoGAN, predicting anomaly score for a givn test image
 5. streamlit_app.py - A working streamlit app, with basic functionality of taking an image as an input and predicting if the image is of a Tuberculosis patient
+6. anogan_v6.py - Please note .ipynb version of this code was > 25 Mb and hence could not be uploaded to GitHub
 
-##### Current working code of AnoGAN model building and performance evaluation
-1. anogan_v6.py - Please note .ipynb version of this code was > 25 Mb and hence could not be uploaded to GitHub
-
-Instructions to run anogan_v6.py -
+Instructions to run anogan_tb_detection.py and anogan_v6.py -
 
 1. Please make sure to connect to the google srive where all data is situated using the below links
 2. All the code can be sequentially run, however please avoid running the cells where models are saved as it may overwrite my existing model which is used for prediction, and follow beow instructions
