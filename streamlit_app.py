@@ -207,10 +207,10 @@ def compute_anomaly_score(model, x, iterations=500, d=None, z_dim=z_dim):
 
 @st.cache_data()
 def load_discr():
-	return tf.keras.models.load_model("Models/model_d.hdf5")
+	return tf.keras.models.load_model("model_d.hdf5")
 @st.cache_data()
 def load_gen():
-	return tf.keras.models.load_model("Models/model_g.hdf5")
+	return tf.keras.models.load_model("model_g.hdf5")
 
 
 model_d = load_discr()
