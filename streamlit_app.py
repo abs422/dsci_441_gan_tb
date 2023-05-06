@@ -218,8 +218,8 @@ model_g = load_gen()
 
 ### load file
 uploaded_file = st.file_uploader("Choose a chest X-Ray image file (jpg or png)", type=["jpg", "png"])
-with open("style.css") as f:
-    st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
+# with open("style.css") as f:
+#     st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
 
 tsne = Image.open("tsne feature.png")
 
