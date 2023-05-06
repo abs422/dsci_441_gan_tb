@@ -36,6 +36,8 @@ Following are the description of files and folders in directory - dsci_441_gan_t
 5. streamlit_app.py - Final python code file to reproduce the streamlit app on streamlit community cloud
 6. tb_shez.csv - Contain anomaly scores for tuberculosis patients, this file was used in the streamlit app to summarize the level of sickness among tuberculosis patients
 7. tsne feature.png - A summary image highlighting the t-sne embedding of features representation from last layer of discriminator in GAN model, this is displayed in streamlit app to summarize GAN capability
+8. .streamlit folder - Contains the colour theme for hosted streamlit app
+9. AnoGAN - Anomaly detection folder - Contains intermediate results and code files for this exercise
 
 ### Details about the code files (dsci_441_gan_tb/AnoGAN - Anomaly detection)
 This directory contains intermediate code files, trained models and weights, these files were <b>not</b> used to make final predictions
