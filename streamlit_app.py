@@ -39,7 +39,7 @@ from scipy import stats
 
 
 from keras.utils. generic_utils import Progbar
-shen_tb = pd.read_csv("C:/Lehigh/Study Material/DSCI 441 - Statistical and Machine Learning/Project/tb_shen.csv")
+shen_tb = pd.read_csv("tb_shen.csv")
 anoma_scores_tb = shen_tb['0']
 
 z_dim = 10
@@ -221,7 +221,7 @@ uploaded_file = st.file_uploader("Choose a chest X-Ray image file (jpg or png)",
 with open("style.css") as f:
     st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
 
-tsne = Image.open("C:/Lehigh/Study Material/DSCI 441 - Statistical and Machine Learning/Project/Report/tsne feature.png")
+tsne = Image.open("tsne feature.png")
 
 link1 = 'https://openi.nlm.nih.gov/faq#faq-tb-coll'
 link2 = 'https://www.kaggle.com/datasets/usmanshams/tbx-11/versions/1?resource=download'
