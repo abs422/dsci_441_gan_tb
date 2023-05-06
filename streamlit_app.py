@@ -145,7 +145,7 @@ def anomaly_detection(test_img, img_size=img_size, g=None, d=None):
 ### generate images
 def generate(BATCH_SIZE, z_dim=z_dim):
     g = generator_model()
-    g.load_weights('weights/generator.h5')
+    g.load_weights('generator.h5')
     noise = np.random.uniform(0, 1, (BATCH_SIZE, z_dim))
     # noise = np.random.uniform(0, 1, (BATCH_SIZE, 256))
     generated_images = g.predict(noise)
@@ -159,7 +159,7 @@ def sum_of_residual(y_true, y_pred):
 def feature_extractor(d=None):
     if d is None:
         d = discriminator_model()
-        d.load_weights('weights/discriminator.h5') 
+        d.load_weights('discriminator.h5') 
     intermidiate_model = Model(inputs=d.layers[0].input, outputs=d.layers[-7].output)
     intermidiate_model.compile(loss='binary_crossentropy', optimizer='rmsprop')
     return intermidiate_model
@@ -168,7 +168,7 @@ def feature_extractor(d=None):
 def anomaly_detector(g=None, d=None, z_dim=z_dim):
     if g is None:
         g = generator_model()
-        g.load_weights('weights/generator.h5')
+        g.load_weights('generator.h5')
     intermidiate_model = feature_extractor(d)
     intermidiate_model.trainable = False
     g = Model(inputs=g.layers[1].input, outputs=g.layers[-1].output)
