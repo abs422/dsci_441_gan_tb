@@ -54,3 +54,6 @@ Instructions to run anogan_tb_detection.py and anogan_v6.py -
 3. At multiple instances the file, the healthy, sick (Non Tb) or Tb images are imported from google drive. All imported files are properly labeled. While importing training set, healthy images are imported and while making test set, Tb images are imported
 4. Please make sure to change the directory to the location where the required images are saved.
 5. You can use this link to access the folder on google drive which was used in the code. https://drive.google.com/drive/folders/1xGupJOw8dcwXeokWcGfcIl9vg1-i-cT1?usp=sharing https://drive.google.com/drive/folders/14LpXOHVdlrV_UUJSXgxbFFdu2YRCyGOa?usp=sharing
+
+#### Link to tuberculosis prediction app hosted on streamlit community cloud 
+https://abs422-dsci-441-gan-tb-streamlit-app-kp3tpv.streamlit.app/
