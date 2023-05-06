@@ -38,6 +38,7 @@ Following are the description of files and folders in directory - dsci_441_gan_t
 7. tsne feature.png - A summary image highlighting the t-sne embedding of features representation from last layer of discriminator in GAN model, this is displayed in streamlit app to summarize GAN capability
 
 ### Details about the code files (dsci_441_gan_tb/AnoGAN - Anomaly detection)
+This directory contains intermediate code files, trained models and weights, these files were <b>not</b> used to make final predictions
 Following is the list of code files and folders in this directory (dsci_441_gan_tb/AnoGAN - Anomaly detection) -
 
 1. anogan.py - The original source code file of AnoGAN, used as inspiration in this project to build a working AnoGAN model
