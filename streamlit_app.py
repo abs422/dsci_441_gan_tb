@@ -120,8 +120,8 @@ def load_model():
     g_optim = Adam(lr=0.0001)
     g.compile(loss='binary_crossentropy', optimizer=g_optim)
     d.compile(loss='binary_crossentropy', optimizer=d_optim)
-    d.load_weights('./weights/discriminator.h5')
-    g.load_weights('./weights/generator.h5')
+    d.load_weights('discriminator.h5')
+    g.load_weights('generator.h5')
     return g, d
 
 def anomaly_detection(test_img, img_size=img_size, g=None, d=None):
